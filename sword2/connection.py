@@ -130,7 +130,8 @@ Please see the testsuite for this class for more examples of the sorts of transa
                        
                        # http layer implementation if different from default
                        http_impl=None,
-                       ca_certs=None):
+                       ca_certs=None,
+                       headers={}):
         """
 Creates a new Connection object.
 
@@ -223,6 +224,7 @@ Loading in a locally held Service Document:
             self.h = http_impl
         
         self.user_name = user_name
+        self.headers = headers #Add additional custom headers, e.q. X-Dataverse-key
         self.on_behalf_of = on_behalf_of
         
         # Cached Deposit Receipt 'indexes'  *cough, cough*
@@ -493,7 +495,7 @@ Loading in a locally held Service Document:
                 md5sum = md5
         
         # request-level headers
-        headers = {}
+        headers = self.headers
         headers['In-Progress'] = str(in_progress).lower()
         if on_behalf_of:
             headers['On-Behalf-Of'] = on_behalf_of
